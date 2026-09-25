@@ -83,7 +83,7 @@ section { padding-top: clamp(4rem, 9vw, 7rem); }
 h2 { font-size: clamp(1.8rem, 3.5vw, 2.6rem); margin-bottom: 1.5rem; }
 
 /* work: customer tabs as underlined text, platform tabs as pills, white cards */
-.tabs { display: flex; gap: .5rem; overflow-x: auto; scrollbar-width: none; padding: 5px; margin: -5px; }
+.tabs { display: flex; gap: .5rem; overflow-x: auto; scrollbar-width: none; padding: 5px; margin: -5px; scroll-padding: 5px; }
 .tabs::-webkit-scrollbar { display: none; }
 .tabs--customer { gap: 1.5rem; }
 .tabs--customer .tab { border: 0; border-bottom: 2px solid transparent; border-radius: 0; background: none; padding: .6rem .25rem; font-size: 1.05rem; color: var(--muted); }

@@ -131,7 +131,7 @@ test('tiers: one recommended with a badge, every button mails the placeholder ad
 });
 
 test('contact and footer', () => {
-  assert.equal(L.renderContact(), `<p>Tell me about your business and I&#39;ll reply within a day.</p><a class="btn" href="mailto:hello@newtzmedia.example">hello@newtzmedia.example</a>`);
+  assert.equal(L.renderContact(), `<p>Tell me about your business and I’ll reply within a day.</p><a class="btn" href="mailto:hello@newtzmedia.example">hello@newtzmedia.example</a>`);
   assert.equal(L.renderFooterNote(), 'Sample work. Businesses shown are fictional except NFTek.');
 });
 

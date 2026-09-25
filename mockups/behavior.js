@@ -97,7 +97,13 @@
       const target = tabs[(next + tabs.length) % tabs.length];
       onPick(target);
       const fresh = document.getElementById(target.id);
-      if (fresh) fresh.focus();
+      if (fresh) {
+        fresh.focus();
+        // bring the newly focused tab into view on a scrolled row (no smooth
+        // behavior: the row does not animate its own scroll, and 'nearest'
+        // is a no-op when the tab is already visible)
+        fresh.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+      }
     });
   }
   tablistKeys(ctabs, (b) => selectCustomer(b.dataset.customer));
@@ -140,7 +146,8 @@
     let current = C.customers[0].id;
     let timer = null;             // interval handle while cycling
     let stopped = false;          // true after a pill click, a hero-card click, or Pause: the intent (and the toggle label) never restarts on its own once true
-    let hovering = false;         // pointer or focus inside the hero pauses it
+    let hovered = false;          // pointer inside the hero pauses it
+    let focused = false;          // keyboard focus inside the hero pauses it (tracked separately from hover so one leaving does not clear the other's hold)
 
     function show(id, animate) {
       current = id;
@@ -157,7 +164,7 @@
     const running = () => timer !== null;
     function syncToggle() { toggle.textContent = stopped ? C.copy.play : C.copy.pause; } // label reflects intent (stopped), not the live running() state, so a hover/focus pause never flips it
     function start(force) {
-      if (running() || stopped || (!force && hovering) || !motionOk()) { syncToggle(); return; }
+      if (running() || stopped || (!force && (hovered || focused)) || !motionOk()) { syncToggle(); return; }
       timer = setInterval(() => show(L.nextCustomerId(current), true), PERIOD);
       syncToggle();
     }
@@ -177,11 +184,11 @@
       stopped = true;
       stop();
     });
-    hero.addEventListener('mouseenter', () => { hovering = true; stop(); });
-    hero.addEventListener('mouseleave', () => { hovering = false; start(false); });
-    hero.addEventListener('focusin', () => { hovering = true; stop(); });
+    hero.addEventListener('mouseenter', () => { hovered = true; stop(); });
+    hero.addEventListener('mouseleave', () => { hovered = false; start(false); }); // start(false) is a no-op while focused still holds it
+    hero.addEventListener('focusin', () => { focused = true; stop(); });
     hero.addEventListener('focusout', (e) => {
-      if (!hero.contains(e.relatedTarget)) { hovering = false; start(false); }
+      if (!hero.contains(e.relatedTarget)) { focused = false; start(false); } // start(false) is a no-op while hovered still holds it
     });
     mq.addEventListener('change', () => { if (!motionOk()) stop(); });
 

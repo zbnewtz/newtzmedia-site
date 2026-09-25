@@ -187,7 +187,7 @@ globalThis.NEWTZ_CONTENT = {
     seeWork: 'See the work',
     pricing: 'Pricing',
     emailMe: 'Email me',
-    contactLine: "Tell me about your business and I'll reply within a day.",
+    contactLine: 'Tell me about your business and I’ll reply within a day.',
     footerNote: 'Sample work. Businesses shown are fictional except NFTek.',
     perMonth: '/month',
     recommended: 'Recommended',

@@ -53,7 +53,7 @@ h2 { font-size: 1rem; color: var(--muted); letter-spacing: 0; margin-bottom: 2re
 .hero .btn { margin-top: 2.5rem; }
 
 /* work: plain text tabs, one violet underline */
-.tabs { display: flex; gap: 1.5rem; overflow-x: auto; scrollbar-width: none; padding: 5px; margin: -5px; }
+.tabs { display: flex; gap: 1.5rem; overflow-x: auto; scrollbar-width: none; padding: 5px; margin: -5px; scroll-padding: 5px; }
 .tabs::-webkit-scrollbar { display: none; }
 .tabs--platform { margin: calc(.5rem - 5px) -5px calc(3rem - 5px); }
 .tab {

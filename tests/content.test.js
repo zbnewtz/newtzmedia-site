@@ -51,10 +51,12 @@ test('nine customer-platform combinations, each showing at least two pieces', ()
 
 test('no fake social proof anywhere in the sample posts', () => {
   const banned = /\b(review|reviews|rated|rating|stars?|testimonial|customers love)\b/i;
-  for (const p of C.pieces) {
-    const slides = (p.slides || []).flatMap((s) => [s.headline, s.sub]);
-    const text = [p.headline, p.sub, p.caption, ...slides].join(' ');
-    assert.doesNotMatch(text, banned, p.id);
+  assert.doesNotMatch(JSON.stringify(C), banned, 'content.js');
+  const fs = require('node:fs');
+  const path = require('node:path');
+  for (const file of ['minimal.html', 'interactive.html']) {
+    const html = fs.readFileSync(path.join(__dirname, '..', 'mockups', file), 'utf8');
+    assert.doesNotMatch(html, banned, file);
   }
 });
 
