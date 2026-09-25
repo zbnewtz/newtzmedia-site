@@ -103,5 +103,100 @@
   tablistKeys(ptabs, (b) => selectPlatform(b.dataset.platform));
   renderWork(false);
 
-  globalThis.NEWTZ_APP = { state, selectCustomer, selectPlatform, setTagline, tablistKeys, motionOk };
+  // ---- lightbox: the native <dialog> gives the focus trap and Escape for free
+  const dialog = $('[data-lightbox]');
+  const dialogBody = $('[data-lightbox-body]');
+  let opener = null;
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.card__open');
+    if (!btn || !dialog || dialog.open) return;
+    const card = btn.closest('.card');
+    const customer = L.customerById(card.dataset.customer);
+    const piece = C.pieces.find((p) => p.id === card.dataset.piece);
+    dialogBody.innerHTML = L.renderCard(customer, piece, card.dataset.platform);
+    const inner = dialogBody.querySelector('.card__open');
+    if (inner) inner.remove(); // no second open button inside the lightbox
+    opener = btn;
+    dialog.showModal();
+  });
+  if (dialog) {
+    dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); }); // backdrop click
+    $('[data-close]', dialog).addEventListener('click', () => dialog.close());
+    dialog.addEventListener('close', () => {
+      if (opener && document.contains(opener)) opener.focus();
+      opener = null;
+    });
+  }
+
+  // ---- hero cycler (interactive only; the minimal page has no [data-hero])
+  const hero = $('[data-hero]');
+  let heroApi = {};
+  if (hero) {
+    const frame = $('[data-hero-frame]', hero);
+    const pills = $('[data-hero-pills]', hero);
+    const toggle = $('[data-hero-toggle]', hero);
+    const PERIOD = 4000;          // spec 5.5: next customer every 4 seconds
+    let current = C.customers[0].id;
+    let timer = null;             // interval handle while cycling
+    let stopped = false;          // true after a pill click or Pause: never restarts on its own
+    let hovering = false;         // pointer or focus inside the hero pauses it
+
+    function show(id, animate) {
+      current = id;
+      pills.innerHTML = L.renderCustomerTabs(id, { prefix: 'htab', controls: 'hero-panel' });
+      const html = L.renderHeroPost(id);
+      const ms = animate ? Math.min(swapMs(), 150) : 0; // 150ms fade out, then the CSS slide-in runs
+      if (ms === 0) { frame.innerHTML = html; return; }
+      frame.classList.add('is-leaving');
+      setTimeout(() => {
+        frame.innerHTML = html;
+        frame.classList.remove('is-leaving');
+      }, ms);
+    }
+    const running = () => timer !== null;
+    function syncToggle() { toggle.textContent = running() ? C.copy.pause : C.copy.play; }
+    function start(force) {
+      if (running() || stopped || (!force && hovering) || !motionOk()) { syncToggle(); return; }
+      timer = setInterval(() => show(L.nextCustomerId(current), true), PERIOD);
+      syncToggle();
+    }
+    function stop() {
+      if (running()) { clearInterval(timer); timer = null; }
+      syncToggle();
+    }
+    const pick = (b) => { stopped = true; stop(); show(b.dataset.customer, true); };
+    pills.addEventListener('click', (e) => { const b = e.target.closest('[data-customer]'); if (b) pick(b); });
+    tablistKeys(pills, pick);
+    toggle.addEventListener('click', () => {
+      if (running()) { stopped = true; stop(); } else { stopped = false; start(true); }
+    });
+    hero.addEventListener('mouseenter', () => { hovering = true; stop(); });
+    hero.addEventListener('mouseleave', () => { hovering = false; start(false); });
+    hero.addEventListener('focusin', () => { hovering = true; stop(); });
+    hero.addEventListener('focusout', (e) => {
+      if (!hero.contains(e.relatedTarget)) { hovering = false; start(false); }
+    });
+    mq.addEventListener('change', () => { if (!motionOk()) stop(); });
+
+    show(current, false);
+    start(false);
+    heroApi = { heroRunning: running, heroCurrent: () => current, heroShow: show };
+  }
+
+  // ---- scroll reveals (interactive only; the minimal page has no [data-reveal])
+  const reveals = document.querySelectorAll('[data-reveal]');
+  if (reveals.length) {
+    if (!motionOk() || !('IntersectionObserver' in window)) {
+      reveals.forEach((el) => el.classList.add('is-in'));
+    } else {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((en) => {
+          if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); }
+        });
+      }, { threshold: 0.12 });
+      reveals.forEach((el) => io.observe(el));
+    }
+  }
+
+  globalThis.NEWTZ_APP = Object.assign({ state, selectCustomer, selectPlatform, setTagline, tablistKeys, motionOk }, heroApi);
 })();
