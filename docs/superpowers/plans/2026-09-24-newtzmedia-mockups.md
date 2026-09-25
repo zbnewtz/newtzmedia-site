@@ -2484,3 +2484,42 @@ List: every guideline finding and what was done with it, every deviation from th
 **Executed check (2026-09-24, before handoff):** every code block in this plan was extracted into a scratch tree and run. Result: 40 of 40 Node tests pass; both pages were served and driven in the built-in browser: the nine gallery combinations, the tab keyboard movement, the tagline switch, the lightbox (open, focus trap, close button, Escape), the hero cycler (4s cycle, pill click stops it, Play restarts it, reduced motion hides the toggle), the scroll reveals, the X pillarbox, the Story frame, the crop marks, both phone widths with no horizontal scroll. The expected outputs above are copied from those runs.
 
 **Type consistency:** `renderCustomerTabs(activeId, opts)` with `{prefix, controls}` in Tasks 3 and 6; `NEWTZ_APP` keys `state, selectCustomer, selectPlatform, setTagline, tablistKeys, motionOk, heroRunning, heroCurrent, heroShow` in Tasks 5 and 6 and every verification snippet; class names `card__post, card__marks, card__chip, card__meta, card__open, hero-post, chip, is-swapping, is-leaving, is-in, reduced-motion` identical across Tasks 3, 5, 6, 8, 9; `--swap-ms` read in Task 5, set in Tasks 8 and 9.
+
+## Post-review corrections (2026-09-25)
+
+The code blocks above were written and executed before the final whole-branch
+review, and that review changed things the blocks above no longer show. The
+plan body above is left as written; the corrections landed in these commits
+instead.
+
+- `d964093` made the Web Interface Guidelines fixes: a `theme-color` meta, a
+  `color-scheme` meta, `touch-action` on interactive elements, `overscroll-behavior`,
+  transitions limited to the `transform` and `opacity` properties, hover styling
+  on the close button, `translate="no"` on the wordmark, curly apostrophes in
+  copy, and a `min-width` on `.post__meta`.
+- `dbc58e7` added a tinted tap highlight.
+- `90413b1` gated the reveal styles on `html.js` so Style 2 is not empty with
+  scripts off, made the Pause label follow intent (a hero-card click also
+  counts as a manual stop), moved the `.tabs` padding to 5px with a -5px
+  margin so the focus ring is not clipped, brought tap targets up to 44px,
+  retinted the tap highlight, and removed the `existsSync` guard from
+  `pages.test`.
+- "Apply the post-review rulings and residual fixes" (see git log for the
+  SHA, since it was not known before that commit was made, and it was not
+  amended afterward) made changes A to E from the owner's post-review
+  ruling: the curly apostrophe in the contact line, `scroll-padding` on the
+  tab rows, splitting the hero cycler's hover flag into separate `hovered`
+  and `focused` flags so one leaving does not clear the other's hold,
+  scrolling the focused tab into view on keyboard movement, and widening the
+  banned-words test to scan all of `NEWTZ_CONTENT` plus both HTML pages.
+
+Two annotations elsewhere in this plan were left exactly as written even
+though they do not match what the browser now shows, because fixing them was
+outside this ruling's scope:
+
+- Task 7 Step 3 expects the headline font to read as `"Gabarito"` with
+  quotes; the computed style actually reads the bare word `Gabarito`, with no
+  quotes.
+- Task 8 Step 3 says the h1 measures about 136px at a 1200px-wide pane; the
+  rule that sizes it, `clamp(2.8rem, 9vw, 8.5rem)`, actually gives 108px at
+  1200px wide and 115.2px at 1280px wide.
