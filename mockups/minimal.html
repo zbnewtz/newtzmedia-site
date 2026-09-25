@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en" data-style="minimal">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NewtzMedia</title>
+<meta name="description" content="Social media posts for local businesses, for a monthly fee.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@800&family=Gabarito:wght@500;800&family=Instrument+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="posts.css">
+<link rel="stylesheet" href="minimal.css">
+</head>
+<body>
+<a class="skip" href="#work">Skip to the work</a>
+
+<header class="site-head">
+  <a class="wordmark" href="#top">NewtzMedia</a>
+  <nav aria-label="Site">
+    <a href="#work">Work</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#contact">Email</a>
+  </nav>
+</header>
+
+<main id="top">
+  <section class="hero" aria-labelledby="headline">
+    <h1 id="headline" data-mount="headline">You run the shop. I run the <em>feed</em>.</h1>
+    <p class="subline" data-mount="subline">I make a month of social posts for local businesses. You approve them, I schedule them. From $150 a month.</p>
+    <a class="btn" href="#work">See the work</a>
+  </section>
+
+  <section class="work" id="work" aria-labelledby="work-h">
+    <h2 id="work-h">Work</h2>
+    <div class="tabs tabs--customer" role="tablist" aria-label="Customer" data-customer-tabs></div>
+    <div class="tabs tabs--platform" role="tablist" aria-label="Platform" data-platform-tabs></div>
+    <div class="gallery" id="gallery" role="tabpanel"></div>
+    <noscript><p>The sample posts need JavaScript to display. Email hello@newtzmedia.example and I will send them directly.</p></noscript>
+  </section>
+
+  <section class="how" id="how" aria-labelledby="how-h">
+    <h2 id="how-h">How it works</h2>
+    <ol class="steps" data-mount="steps"></ol>
+  </section>
+
+  <section class="pricing" id="pricing" aria-labelledby="pricing-h">
+    <h2 id="pricing-h">Pricing</h2>
+    <div class="tiers" data-mount="tiers"></div>
+  </section>
+
+  <section class="contact" id="contact" aria-labelledby="contact-h">
+    <h2 id="contact-h">Send me a message</h2>
+    <div data-mount="contact"></div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <span class="wordmark">NewtzMedia</span>
+  <p data-mount="footer"></p>
+</footer>
+
+<dialog class="lightbox" data-lightbox aria-label="Post, larger">
+  <button class="lightbox__close" type="button" data-close>Close</button>
+  <div class="lightbox__body" data-lightbox-body></div>
+</dialog>
+
+<aside class="mock-controls" aria-label="Mockup controls">
+  <span>Mockup controls: tagline</span>
+  <button type="button" data-tagline="a" aria-pressed="true">a</button>
+  <button type="button" data-tagline="b" aria-pressed="false">b</button>
+  <button type="button" data-tagline="c" aria-pressed="false">c</button>
+</aside>
+
+<script src="content.js"></script>
+<script src="logic.js"></script>
+<script src="behavior.js"></script>
+</body>
+</html>
