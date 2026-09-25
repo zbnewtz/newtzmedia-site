@@ -1,0 +1,90 @@
+/* posts.css - everything INSIDE a post: the platform chrome and the artwork.
+   Identical in both mockups. minimal.css and interactive.css never target
+   these classes (tests/pages.test.js enforces it). */
+
+/* ---- platform chrome: a real phone shows this in the system font ---- */
+.post {
+  --post-bg: #ffffff;
+  --post-ink: #151515;
+  --post-muted: #6b6b6b;
+  --post-line: #e6e6e6;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--post-ink);
+  background: var(--post-bg);
+  border-radius: 12px;
+  overflow: hidden;
+  text-align: left;
+}
+.post__head { display: flex; align-items: center; gap: 8px; padding: 10px 12px; }
+.post__avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--av, #999); flex: none; }
+.post__name { font-weight: 600; white-space: nowrap; }
+.post__meta { color: var(--post-muted); font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.post__text, .post__caption { margin: 0; padding: 0 12px 10px; }
+.post__caption strong { font-weight: 600; }
+.post__tags { color: #3a5fa8; }
+.post__actions { display: flex; gap: 14px; padding: 8px 12px 2px; color: var(--post-ink); }
+.post__icon { width: 20px; height: 20px; display: inline-block; }
+.post__icon svg { width: 100%; height: 100%; display: block; }
+.post--x .post__actions, .post--linkedin .post__actions {
+  color: var(--post-muted); justify-content: space-between; padding: 8px 12px 10px;
+}
+.post__linkcard { display: grid; gap: 2px; padding: 10px 12px; background: #f0f2f5; border-top: 1px solid var(--post-line); }
+.post__domain { font-size: 11px; letter-spacing: .04em; text-transform: uppercase; color: var(--post-muted); }
+.post__linktitle { font-weight: 600; }
+.post__btn { justify-self: start; margin-top: 6px; padding: 5px 10px; border-radius: 6px; background: #e4e6eb; font-weight: 600; font-size: 12px; }
+.post__doc { position: relative; }
+.post__pages, .post__story {
+  position: absolute; padding: 2px 8px; border-radius: 999px;
+  background: #1a1a1a; color: #fff; font-size: 11px; font-weight: 600; letter-spacing: .04em;
+}
+.post__pages { top: 8px; right: 8px; }
+.post__story { top: 10px; left: 10px; text-transform: uppercase; }
+
+/* ---- frames: the box the artwork sits in, at the ratio the platform shows ---- */
+.post__frame {
+  position: relative; overflow: hidden;
+  display: grid; place-items: center;
+  background: var(--art-bg);
+}
+.post__frame--4x5 { aspect-ratio: 4 / 5; }
+.post__frame--1x1 { aspect-ratio: 1; }
+.post__frame--9x16 { aspect-ratio: 9 / 16; }
+.post__frame--16x9 { aspect-ratio: 16 / 9; }
+.post--x .post__frame { margin: 0 12px 4px; border-radius: 12px; border: 1px solid var(--post-line); }
+
+/* ---- artwork: the same in both mockups and on every platform ---- */
+.art {
+  position: relative; width: 100%; height: 100%; box-sizing: border-box; padding: 9%;
+  display: flex; flex-direction: column; justify-content: center; gap: .45em;
+  background: var(--art-bg); color: var(--art-ink);
+  font-family: "Gabarito", system-ui, sans-serif;
+  container-type: inline-size;
+}
+/* X shows 16:9: keep the native ratio and let the same color fill the sides */
+.post__frame--16x9 .art { width: auto; height: 100%; aspect-ratio: 4 / 5; }
+.post__frame--16x9 .art--1x1 { aspect-ratio: 1; }
+.art__brand {
+  position: absolute; top: 7%; right: 8%;
+  font-size: clamp(9px, 3.6cqw, 13px); font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--art-ink); opacity: .85;
+}
+.art__motif { width: 22%; max-width: 72px; color: var(--art-accent); }
+.art__motif svg { display: block; width: 100%; height: auto; }
+.art__headline { margin: 0; font-weight: 800; font-size: clamp(16px, 11cqw, 44px); line-height: 1; letter-spacing: -.02em; text-wrap: balance; }
+.art__sub { margin: 0; font-weight: 500; font-size: clamp(10px, 4.6cqw, 16px); line-height: 1.3; opacity: .9; }
+.art--9x16 .art__headline { font-size: clamp(16px, 12cqw, 40px); }
+
+/* ---- mockup controls strip: not part of either design ---- */
+.mock-controls {
+  position: fixed; right: 1rem; bottom: 1rem; z-index: 20;
+  display: flex; gap: .4rem; align-items: center; padding: .4rem .6rem;
+  border-radius: 8px; background: #fff; color: #111;
+  font: 600 .75rem/1 system-ui, sans-serif; box-shadow: 0 4px 16px rgba(0, 0, 0, .4);
+}
+.mock-controls button {
+  font: inherit; min-width: 28px; height: 28px; border: 1px solid #bbb; border-radius: 6px;
+  background: #f3f3f3; color: #111; cursor: pointer;
+}
+.mock-controls button[aria-pressed="true"] { background: #111; color: #fff; border-color: #111; }
