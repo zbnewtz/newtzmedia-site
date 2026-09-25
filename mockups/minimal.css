@@ -17,7 +17,7 @@
   --pad: clamp(1rem, 4vw, 2rem);
 }
 * { box-sizing: border-box; }
-button, .btn { touch-action: manipulation; }
+button, .btn, a { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
 html { scroll-behavior: smooth; }
 html.reduced-motion { scroll-behavior: auto; }
 body {

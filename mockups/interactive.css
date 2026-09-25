@@ -22,7 +22,7 @@
   --shadow-lift: 0 18px 40px rgba(43, 36, 48, .16), 0 4px 10px rgba(43, 36, 48, .08);
 }
 * { box-sizing: border-box; }
-button, .btn { touch-action: manipulation; }
+button, .btn, a { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
 html { scroll-behavior: smooth; }
 html.reduced-motion { scroll-behavior: auto; }
 body { margin: 0; background: var(--linen); color: var(--cocoa); font-family: var(--body); font-size: var(--step-0); line-height: 1.6; -webkit-font-smoothing: antialiased; }
