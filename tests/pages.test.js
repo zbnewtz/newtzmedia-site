@@ -56,7 +56,6 @@ test('static tagline (a) is in each page for the no-JS case', () => {
 
 test('no style file targets the inside of a post', () => {
   for (const f of ['minimal.css', 'interactive.css']) {
-    if (!fs.existsSync(path.join(__dirname, '..', 'mockups', f))) continue; // arrives in Tasks 8 and 9
     assert.doesNotMatch(read(f), /\.post__|\.art\b|\.art__/, f);
   }
 });

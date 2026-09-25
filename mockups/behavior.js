@@ -6,6 +6,7 @@
   const C = globalThis.NEWTZ_CONTENT;
   const L = globalThis.NEWTZ_LOGIC;
   const root = document.documentElement;
+  root.classList.add('js'); // the reveal styles key off this so the page is never empty without scripts
   const STYLE = root.dataset.style; // 'minimal' | 'interactive'
   const $ = (sel, el) => (el || document).querySelector(sel);
 
@@ -138,7 +139,7 @@
     const PERIOD = 4000;          // spec 5.5: next customer every 4 seconds
     let current = C.customers[0].id;
     let timer = null;             // interval handle while cycling
-    let stopped = false;          // true after a pill click or Pause: never restarts on its own
+    let stopped = false;          // true after a pill click, a hero-card click, or Pause: the intent (and the toggle label) never restarts on its own once true
     let hovering = false;         // pointer or focus inside the hero pauses it
 
     function show(id, animate) {
@@ -154,7 +155,7 @@
       }, ms);
     }
     const running = () => timer !== null;
-    function syncToggle() { toggle.textContent = running() ? C.copy.pause : C.copy.play; }
+    function syncToggle() { toggle.textContent = stopped ? C.copy.play : C.copy.pause; } // label reflects intent (stopped), not the live running() state, so a hover/focus pause never flips it
     function start(force) {
       if (running() || stopped || (!force && hovering) || !motionOk()) { syncToggle(); return; }
       timer = setInterval(() => show(L.nextCustomerId(current), true), PERIOD);
@@ -168,7 +169,13 @@
     pills.addEventListener('click', (e) => { const b = e.target.closest('[data-customer]'); if (b) pick(b); });
     tablistKeys(pills, pick);
     toggle.addEventListener('click', () => {
-      if (running()) { stopped = true; stop(); } else { stopped = false; start(true); }
+      stopped = !stopped;
+      if (stopped) stop(); else start(true);
+    });
+    hero.addEventListener('click', (e) => {
+      if (e.target.closest('[data-hero-toggle]')) return; // spec 5.5: a click anywhere else in the hero card is a manual stop that never restarts on its own
+      stopped = true;
+      stop();
     });
     hero.addEventListener('mouseenter', () => { hovering = true; stop(); });
     hero.addEventListener('mouseleave', () => { hovering = false; start(false); });
