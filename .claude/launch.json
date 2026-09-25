@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "newtzmedia-mockups",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "8765", "--bind", "127.0.0.1", "--directory", "mockups"],
+      "cwd": "C:/Users/mythi/Claude/newtzmedia-site",
+      "port": 8765
+    }
+  ]
+}

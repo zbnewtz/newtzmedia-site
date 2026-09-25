@@ -196,8 +196,7 @@ button, the active tab underline, and the crop marks. Nowhere else.
   display face at small size, sentence case. No monospace eyebrows, no all-caps
   tracking labels.
 - Body and UI: Instrument Sans, 400 and 600. Body `clamp(1rem, 0.95rem + 0.3vw, 1.125rem)`, line-height 1.6, max 62ch.
-- Google Fonts link: Bricolage Grotesque 800, Instrument Sans 400 and 600, plus
-  Gabarito 800 because the post artwork uses it in both mockups (section 6).
+- Google Fonts link: Bricolage Grotesque 800, Instrument Sans 400 and 600, Gabarito 500 and 800 (the artwork uses Gabarito in both mockups, section 6).
 
 ### 4.3 Layout
 
@@ -273,7 +272,7 @@ No second accent color. The posts bring the other colors.
   line-height 1.05, in --white on the band. Section headings in --cocoa.
 - Body and UI: Figtree, 400, 500, 600. Same body scale as Style 1.
 - No serif anywhere.
-- Google Fonts link: Gabarito 800, Figtree 400 500 600.
+- Google Fonts link: Gabarito 500 and 800, Figtree 400 500 600.
 
 ### 5.3 Layout
 
@@ -366,10 +365,11 @@ One script, loaded by both HTML files, no dependencies.
   it. The two must not fight: no style rule targets the inside of a post.
 
 Post artwork is built from the piece data: background from the customer palette,
-headline and supporting text in the post's own type (Gabarito for all posts,
-since they represent Canva-style work and should look the same in both mockups),
-and the SVG motif. Crops for 16:9 (X) and the story frame are CSS `aspect-ratio`
-plus positioning of the artwork block inside an overflow-hidden frame.
+headline in Gabarito 800 and supporting text in Gabarito 500 (the artwork looks
+the same in both mockups), the platform chrome around it in the system font
+stack as a real phone would show it, and the SVG motif. Crops for 16:9 (X) and
+the story frame are CSS `aspect-ratio` plus positioning of the artwork block
+inside an overflow-hidden frame.
 
 ## 7. Accessibility and responsive floor
 
@@ -395,6 +395,7 @@ newtzmedia-site/
   docs/superpowers/specs/2026-09-24-newtzmedia-mockups-design.md   (this file)
   mockups/
     content.js         customers, pieces, captions, steps, tiers, copy, taglines
+    logic.js           pure selectors and HTML-string renderers; Node-tested
     behavior.js        tabs, pills, gallery render, lightbox, hero cycler,
                        reduced motion, mockup controls
     posts.css          post artwork and the four platform templates
@@ -402,6 +403,11 @@ newtzmedia-site/
     minimal.css        Style 1 tokens, layout, proof-sheet signature
     interactive.html   Style 2 page
     interactive.css    Style 2 tokens, layout, hero band, chip signature
+  tests/
+    content.test.js
+    logic.test.js
+    render.test.js
+    pages.test.js
 ```
 
 The real site will later take the repo root; the mockups stay in `mockups/`.
