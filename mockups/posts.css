@@ -20,7 +20,7 @@
 .post__head { display: flex; align-items: center; gap: 8px; padding: 10px 12px; }
 .post__avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--av, #999); flex: none; }
 .post__name { font-weight: 600; white-space: nowrap; }
-.post__meta { color: var(--post-muted); font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.post__meta { color: var(--post-muted); font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
 .post__text, .post__caption { margin: 0; padding: 0 12px 10px; }
 .post__caption strong { font-weight: 600; }
 .post__tags { color: #3a5fa8; }

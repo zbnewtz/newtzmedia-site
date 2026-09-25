@@ -1,6 +1,7 @@
 /* minimal.css - Style 1. Tokens, type, layout, the proof-sheet signature.
    Styles the page and the card wrapper only. Nothing inside .post. */
 :root {
+  color-scheme: dark;
   --ink: #0B0A0F;
   --raised: #15121C;
   --pale: #EDE9F3;
@@ -16,6 +17,7 @@
   --pad: clamp(1rem, 4vw, 2rem);
 }
 * { box-sizing: border-box; }
+button, .btn { touch-action: manipulation; }
 html { scroll-behavior: smooth; }
 html.reduced-motion { scroll-behavior: auto; }
 body {
@@ -117,7 +119,7 @@ html.reduced-motion .card__marks { transition: none; }
 .site-foot { border-top: 1px solid var(--line); max-width: var(--wrap); margin: 0 auto; padding: 2rem var(--pad) 3rem; display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; color: var(--muted); font-size: .9rem; }
 
 /* lightbox */
-.lightbox { border: 0; padding: 0; background: transparent; max-width: min(92vw, 520px); width: 100%; }
+.lightbox { border: 0; padding: 0; background: transparent; max-width: min(92vw, 520px); width: 100%; overscroll-behavior: contain; }
 .lightbox::backdrop { background: rgba(11, 10, 15, .9); }
 .lightbox__close { display: block; margin: 0 0 .75rem auto; appearance: none; background: none; border: 1px solid var(--line); color: var(--pale); font: inherit; font-weight: 600; padding: .5rem 1rem; border-radius: 999px; cursor: pointer; min-height: 44px; }
 .lightbox__close:hover { border-color: var(--pale); }
